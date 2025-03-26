@@ -130,7 +130,7 @@
         }
 
         // Helper method
-        public function authorExists() {
+        public function exists() {
             $query = 'SELECT id FROM authors WHERE id = :id LIMIT 1';
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':id', $this->id);
