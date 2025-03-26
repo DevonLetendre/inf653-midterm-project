@@ -119,6 +119,7 @@
             return $stmt->rowCount() > 0; // Returns true if the author exists, otherwise false
         }
 
+        /*
         public function exists2() {
             $query = "SELECT id FROM authors WHERE id = :id LIMIT 1";
             $stmt = $this->conn->prepare($query);
@@ -127,6 +128,7 @@
             
             return $stmt->rowCount() > 0;
         }
+        */
 
         public function exists3($author_id) {
             $query = 'SELECT id FROM authors WHERE id = :id LIMIT 1';

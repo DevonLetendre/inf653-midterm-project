@@ -31,7 +31,14 @@ include_once '../../models/Author.php';
 $author = new Author($db);
 $author->id = $quote->author_id;
 
+/*
 if (!$author->exists2()) {
+    echo json_encode(['message' => 'author_id Not Found']);
+    exit();
+}
+    */
+
+if (!$author->exists()) {
     echo json_encode(['message' => 'author_id Not Found']);
     exit();
 }
