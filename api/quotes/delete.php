@@ -1,32 +1,39 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: DELETE');
-header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+    //Headers
+    header('Access-Control-Allow-Origin: *');
+    header('Content-Type: application/json');
+    header('Access-Control-Allow-Methods: DELETE');
+    header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, 
+    Access-Control-Allow-Methods, Authorization, X-Requested-With');
 
-include_once '../../config/Database.php';
-include_once '../../models/Quote.php';
+    include_once '../../config/Database.php';
+    include_once '../../models/Quote.php';
 
-$database = new Database();
-$db = $database->connect();
+    //Instantiate DB & connect
+    $database = new Database();
+    $db = $database->connect();
 
-$quote = new Quote($db);
-$data = json_decode(file_get_contents("php://input"));
+    //Instantiate Category object
+    $quote = new Quote($db);
 
-if (!empty($data->id)) {
-    $quote->id = intval($data->id);
+    //Get raw posted data
+    $data = json_decode(file_get_contents("php://input"));
 
-    // Check if the quote exists before deleting
-    if (!$quote->exists()) {
-        echo json_encode(['message' => 'No Quotes Found']);
-    } elseif ($quote->delete()) {
-        echo json_encode([
-            'id' => $quote->id
-        ]);
-    } else {
-        echo json_encode(['message' => 'Quote Not Deleted']);
+    // Check if ID is provided
+    if (!isset($data->id) || empty($data->id)) {
+        echo json_encode(array('message' => 'No Quotes Found'));
+        exit;
     }
-} else {
-    echo json_encode(['message' => 'Invalid ID']);
-}
+
+    //Set ID to update
+    $quote->id = $data->id;
+
+    //Delete quote
+    $deleted_id = $quote->delete();
+
+    if($deleted_id){
+        echo json_encode(array('id' => $deleted_id));
+    } else {
+        echo json_encode(array('message' => 'No Quotes Found'));
+    }
 ?>
