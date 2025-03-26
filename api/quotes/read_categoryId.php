@@ -15,6 +15,8 @@ $quote = new Quote($db);
 // Check if author_id is provided
 if (isset($_GET['category_id'])) {
 
+    // Set category_id before calling the method
+    $quote->category_id = $_GET['category_id'];
     // Get quotes by category_id
     $result = $quote->read_by_category();
     $num = $result->rowCount();
