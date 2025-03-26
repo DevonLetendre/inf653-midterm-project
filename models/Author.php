@@ -69,6 +69,10 @@
 
             // Prepare stmt
             $stmt = $this->conn->prepare($query);
+
+            // Clean & sanitize data
+            $this->author = htmlspecialchars(strip_tags($this->author));
+
             // Bind author
             $stmt->bindParam(':author', $this->author);
 
@@ -92,6 +96,11 @@
             
             // Prepare stmt
             $stmt = $this->conn->prepare($query);
+
+            // Clean & sanitize data
+            $this->author = htmlspecialchars(strip_tags($this->author));
+            $this->id = htmlspecialchars(strip_tags($this->id));
+
             // Bind author & ID
             $stmt->bindParam(':author', $this->author);
             $stmt->bindParam(':id', $this->id);
@@ -101,10 +110,19 @@
 
         // Delete author
         public function delete() {
+
+            // Create query
             $query = "DELETE FROM " . $this->table . " 
                     WHERE 
                         id = :id";
+
+            // Prepare stmt
             $stmt = $this->conn->prepare($query);
+
+            // Clean & Sanitize data
+            $this->id = htmlspecialchars(strip_tags($this->id));
+
+            // Bind id
             $stmt->bindParam(':id', $this->id);
 
             return $stmt->execute();

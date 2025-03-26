@@ -1,30 +1,54 @@
 <?php
 class Category {
+    // DB stuff
     private $conn;
     private $table = 'categories';
 
+    // Properties
     public $id;
     public $category;
 
+    // Constructor
     public function __construct($db) {
         $this->conn = $db;
     }
 
-    // Read all categories
+    // Get all categories
     public function read() {
-        $query = "SELECT id, category FROM " . $this->table;
+        // Create Query
+        $query = "SELECT 
+                    id, 
+                    category 
+                FROM " . $this->table . "
+                ORDER BY
+                    id DESC";
+
+        // Prepare stmt
         $stmt = $this->conn->prepare($query);
+        // Execute query & return
         $stmt->execute();
         return $stmt;
     }
 
-    // Read single category by ID
+    // Read single category via ID
     public function read_single() {
-        $query = "SELECT id, category FROM " . $this->table . " WHERE id = ? LIMIT 1";
+        // Create query
+        $query = "SELECT id, 
+                        category 
+                FROM 
+                    " . $this->table . " 
+                WHERE 
+                    id = ? LIMIT 1";
+        // Prepare stmt
         $stmt = $this->conn->prepare($query);
+
+        // Bind ID
         $stmt->bindParam(1, $this->id);
+
+        // Execute query
         $stmt->execute();
 
+        // Fetch
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
         if ($row) {
@@ -35,8 +59,19 @@ class Category {
 
     // Create a category
     public function create() {
-        $query = "INSERT INTO " . $this->table . " (category) VALUES (:category)";
+        // Create query
+        $query = "INSERT INTO " . $this->table . " 
+                    (category) 
+                    VALUES 
+                    (:category)";
+        
+        // Prepare stmt
         $stmt = $this->conn->prepare($query);
+
+        //Clean & sanitize data
+        $this->author = htmlspecialchars(strip_tags($this->category));
+
+        // Bind category
         $stmt->bindParam(':category', $this->category);
 
         if ($stmt->execute()) {
@@ -49,8 +84,21 @@ class Category {
 
     // Update a category
     public function update() {
-        $query = "UPDATE " . $this->table . " SET category = :category WHERE id = :id";
+        // Create query
+        $query = "UPDATE " . $this->table . " 
+                    SET 
+                        category = :category 
+                    WHERE 
+                        id = :id";
+
+        // Prepare stmt
         $stmt = $this->conn->prepare($query);
+
+        //Clean & sanitize data
+        $this->author = htmlspecialchars(strip_tags($this->category));
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
+        // Bind data
         $stmt->bindParam(':category', $this->category);
         $stmt->bindParam(':id', $this->id);
 
@@ -59,8 +107,18 @@ class Category {
 
     // Delete a category
     public function delete() {
-        $query = "DELETE FROM " . $this->table . " WHERE id = :id";
+        // Create query
+        $query = "DELETE FROM " . $this->table . " 
+                    WHERE 
+                        id = :id";
+        
+        // Prepare stmt
         $stmt = $this->conn->prepare($query);
+
+        //Clean/Sanitize Data
+        $this->id = htmlspecialchars(strip_tags($this->id));
+
+        // Bind ID
         $stmt->bindParam(':id', $this->id);
 
         return $stmt->execute();
