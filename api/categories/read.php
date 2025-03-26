@@ -1,40 +1,45 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
+    header('Access-Control-Allow-Origin: *');
+    header('Content-Type: application/json');
 
-include_once '../../config/Database.php';
-include_once '../../models/Category.php';
+    include_once '../../config/Database.php';
+    include_once '../../models/Category.php';
 
-// Instantiate DB & connect
-$database = new Database();
-$db = $database->connect();
+    // Create DB & connect
+    $database = new Database();
+    $db = $database->connect();
 
-// Instantiate category object
-$category = new Category($db);
+    // Create category object
+    $category = new Category($db);
 
-// Category query
-$result = $category->read();
+    // Get categories
+    $result = $category->read();
 
-// Get row count
-$num = $result->rowCount();
+    // Get row count
+    $num = $result->rowCount();
 
-if (isset($_GET['id'])){
-    require_once 'read_single.php'; 
-} 
-else{
-    if ($num > 0) {
-        $categories_arr = array();
+    // If the ID is set, we just return single category
+    if (isset($_GET['id'])){
+        require_once 'read_single.php'; 
+    } 
+    // We return all categories
+    else{
+        if ($num > 0) {
+            $categories_arr = array();
 
-        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-            extract($row);
-            $categories_arr[] = array('id' => $id, 'category' => $category);
-        }
-
-        echo json_encode($categories_arr);
-        } else {
-            echo json_encode(array('message' => 'category_id Not Found'));
-        }
-}
+            // Get all categories
+            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                extract($row);
+                $categories_arr[] = array('id' => $id, 'category' => $category);
+            }
+            // Return the categories
+            echo json_encode($categories_arr);
+            } 
+            // Send categories not found message
+            else {
+                echo json_encode(array('message' => 'category_id Not Found'));
+            }
+    }
 ?>
 
 
