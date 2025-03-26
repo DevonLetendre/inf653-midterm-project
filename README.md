@@ -4,7 +4,8 @@
 
 ### Author: Devon Letendre
 
-### Project URL: https://inf653-midterm-project-osa4.onrender.com/api/
+### REST API Directrory URL: https://inf653-midterm-project-osa4.onrender.com/api/
+### Public Webpage URL: https://inf653-midterm-project-osa4.onrender.com
 
 ## Description
 This project is a PHP-based REST API that manages famous and user-submitted quotations. The API follows an Object-Oriented Programming (OOP) approach and supports CRUD operations for quotes, authors, and categories using MySQL or PostgreSQL.
