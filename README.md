@@ -87,13 +87,6 @@ The project uses a relational database named `quotesdb` with three tables:
 | No categories found | `{ message: 'category_id Not Found' }` |
 | Missing parameters | `{ message: 'Missing Required Parameters' }` |
 
-### **Extra Challenge (Optional)**
-- Fetch a random quote:
-  - `/quotes/?random=true`
-  - `/quotes/?author_id=7&random=true`
-  - `/quotes/?category_id=10&random=true`
-  - `/quotes/?author_id=7&category_id=10&random=true`
-
 ## Installation & Setup
 1. Clone the repository:
    ```sh
