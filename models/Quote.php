@@ -97,6 +97,7 @@ class Quote {
         return $stmt->execute();
     }
 
+    /*
     // Helper method
     public function create2() {
         $query = 'INSERT INTO quotes (quote, author_id, category_id) VALUES (:quote, :author_id, :category_id)';
@@ -111,6 +112,7 @@ class Quote {
         }
         return false;
     }
+    */
 
     // Helper method
     public function create3() {
