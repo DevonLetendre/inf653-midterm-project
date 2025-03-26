@@ -1,28 +1,53 @@
 <?php
     class Author {
+        // DB stuff
         private $conn;
         private $table = 'authors';
-
+        // Properties
         public $id;
         public $author;
 
+        // Constructor
         public function __construct($db) {
             $this->conn = $db;
         }
 
         // Read all authors
         public function read() {
-            $query = "SELECT id, author FROM " . $this->table;
+
+            // Create query
+            $query = 'SELECT
+                        id,
+                        author
+                    FROM
+                        ' . $this->table . '
+                    ORDER BY 
+                        id DESC';
+    
+            // Prepare stmt
             $stmt = $this->conn->prepare($query);
+            // Execute stmt
             $stmt->execute();
+            //Return the statement object so it can be handled in read.php
             return $stmt;
         }
 
-        // Read single author by ID
+        // Read single author
         public function read_single() {
-            $query = "SELECT id, author FROM " . $this->table . " WHERE id = ? LIMIT 1";
+            // Create query
+            $query = "SELECT 
+                            id, 
+                            author 
+                    FROM
+                        " . $this->table . " 
+                    WHERE 
+                        id = ? LIMIT 1";
+
+            // Prepare stmt
             $stmt = $this->conn->prepare($query);
+            // Bind ID
             $stmt->bindParam(1, $this->id);
+            // Execute Query
             $stmt->execute();
 
             $row = $stmt->fetch(PDO::FETCH_ASSOC);
@@ -34,11 +59,17 @@
             }
         }
 
-
-        // Create an author
+        // Create author
         public function create() {
-            $query = "INSERT INTO " . $this->table . " (author) VALUES (:author)";
+            // Create query
+            $query = "INSERT INTO " . $this->table . " 
+                        (author) 
+                        VALUES 
+                        (:author)";
+
+            // Prepare stmt
             $stmt = $this->conn->prepare($query);
+            // Bind author
             $stmt->bindParam(':author', $this->author);
 
             if ($stmt->execute()) {
@@ -49,19 +80,30 @@
             return false;
         }
 
-        // Update an author
+        // Update author
         public function update() {
-            $query = "UPDATE " . $this->table . " SET author = :author WHERE id = :id";
+
+            // Create query
+            $query = "UPDATE " . $this->table . " 
+                    SET 
+                        author = :author 
+                    WHERE 
+                        id = :id";
+            
+            // Prepare stmt
             $stmt = $this->conn->prepare($query);
+            // Bind author & ID
             $stmt->bindParam(':author', $this->author);
             $stmt->bindParam(':id', $this->id);
 
             return $stmt->execute();
         }
 
-        // Delete an author
+        // Delete author
         public function delete() {
-            $query = "DELETE FROM " . $this->table . " WHERE id = :id";
+            $query = "DELETE FROM " . $this->table . " 
+                    WHERE 
+                        id = :id";
             $stmt = $this->conn->prepare($query);
             $stmt->bindParam(':id', $this->id);
 
