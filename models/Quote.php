@@ -97,6 +97,7 @@ class Quote {
         return $stmt->execute();
     }
 
+    // Helper method
     public function create2() {
         $query = 'INSERT INTO quotes (quote, author_id, category_id) VALUES (:quote, :author_id, :category_id)';
         $stmt = $this->conn->prepare($query);
@@ -111,6 +112,7 @@ class Quote {
         return false;
     }
 
+    // Helper method 
     public function create3() {
         $query = "INSERT INTO quotes (quote, author_id, category_id) 
                   VALUES (:quote, :author_id, :category_id)";
@@ -246,6 +248,7 @@ class Quote {
         return $stmt;
     }
 
+    // Helper method
     public function exists() {
         $query = 'SELECT id FROM quotes WHERE id = :id LIMIT 1';
         $stmt = $this->conn->prepare($query);

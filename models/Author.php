@@ -128,6 +128,7 @@
             return $stmt->execute();
         }
 
+        // Helper method
         public function exists() {
             $query = 'SELECT id FROM authors WHERE id = :id LIMIT 1';
             $stmt = $this->conn->prepare($query);
@@ -148,6 +149,7 @@
         }
         */
 
+        // Helper method
         public function exists3($author_id) {
             $query = 'SELECT id FROM authors WHERE id = :id LIMIT 1';
             $stmt = $this->conn->prepare($query);

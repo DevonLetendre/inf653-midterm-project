@@ -56,7 +56,6 @@ class Category {
         }
     }
 
-
     // Create a category
     public function create() {
         // Create query
@@ -124,6 +123,7 @@ class Category {
         return $stmt->execute();
     }
 
+    // Helper method
     public function exists() {
         $query = 'SELECT id FROM categories WHERE id = :id LIMIT 1';
         $stmt = $this->conn->prepare($query);
@@ -144,6 +144,7 @@ class Category {
     }
     */
 
+    // Helper method
     public function exists3($category_id) {
         $query = 'SELECT id FROM categories WHERE id = :id LIMIT 1';
         $stmt = $this->conn->prepare($query);
