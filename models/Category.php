@@ -69,7 +69,7 @@ class Category {
         $stmt = $this->conn->prepare($query);
 
         //Clean & sanitize data
-        $this->author = htmlspecialchars(strip_tags($this->category));
+        //$this->author = htmlspecialchars(strip_tags($this->category));
 
         // Bind category
         $stmt->bindParam(':category', $this->category);
@@ -95,8 +95,8 @@ class Category {
         $stmt = $this->conn->prepare($query);
 
         //Clean & sanitize data
-        $this->author = htmlspecialchars(strip_tags($this->category));
-        $this->id = htmlspecialchars(strip_tags($this->id));
+        //$this->author = htmlspecialchars(strip_tags($this->category));
+        //$this->id = htmlspecialchars(strip_tags($this->id));
 
         // Bind data
         $stmt->bindParam(':category', $this->category);
