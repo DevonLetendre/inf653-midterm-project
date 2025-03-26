@@ -12,55 +12,41 @@
     // Create quote object
     $quote = new Quote($db);
 
-    // Query quotes
-    //$result = $quote->read();
-    //$num = $result->rowCount();
-
-    // Check if any quotes exist
-    //If id is specified, only read_single quote
-    if (isset($_GET['id'])){
-        require_once 'read_single.php'; 
+    // Check if specific parameters are provided and include the corresponding file
+    if (isset($_GET['id'])) {
+        require_once 'read_single.php';
     } 
-    else{
+    else if (isset($_GET['category_id']) && isset($_GET['author_id'])) {
+        require_once 'read_categoryId_authorId.php';
+    } 
+    else if (isset($_GET['author_id'])) { 
+        require_once 'read_authorId.php';
+    } 
+    else if (isset($_GET['category_id'])) { 
+        require_once 'read_categoryId.php';
+    } 
+    else {
+        // If no specific ID is given return all quotes
+        $result = $quote->read();
+        $num = $result->rowCount();
 
-        //If categoryId and authorId both specified
-        if (isset($_GET['category_id']) && isset($_GET['author_id'])){
-        require_once 'read_categoryId_authorId.php'; 
-        } 
-        else{
+        if ($num > 0) {
+            $quotes_arr = [];
 
-            //If authorId is specified
-            if (isset($_GET['author_id']) && !isset($_GET['category_id'])){
-            require_once 'read_authorId.php'; 
-            } 
-            else{
-
-                //If categoryId is specified
-                if (isset($_GET['category_id']) && !isset($_GET['author_id'])){
-                require_once 'read_categoryId.php'; 
-                } 
-                else{
-                    // If no specific ID is given, return all quotes
-                    $result = $quote->read();
-                    $num = $result->rowCount();
-
-                    if ($num > 0) {
-                        $quotes_arr = [];
-
-                        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-                            $quotes_arr[] = [
-                                'id' => $row['id'],
-                                'quote' => $row['quote'],
-                                'author' => $row['author'],
-                                'category' => $row['category']
-                            ];
-                        }
-
-                        echo json_encode($quotes_arr);
-                    } else {
-                        echo json_encode(['message' => 'No Quotes Found']);
-                    }
-                }
+            // Set properties if found & return
+            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                $quotes_arr[] = [
+                    'id' => $row['id'],
+                    'quote' => $row['quote'],
+                    'author' => $row['author'],
+                    'category' => $row['category']
+                ];
             }
+            // return quotes
+            echo json_encode($quotes_arr);
+        } 
+        // Output no quotes message
+        else {
+            echo json_encode(['message' => 'No Quotes Found']);
         }
 }
