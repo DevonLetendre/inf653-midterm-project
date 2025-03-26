@@ -49,7 +49,7 @@
     }
 
     // Create quote
-    $newQuoteId = $quote->create3();
+    $newQuoteId = $quote->create();
     if ($newQuoteId) {
         echo json_encode([
             'id' => $newQuoteId,
