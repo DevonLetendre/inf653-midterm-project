@@ -97,7 +97,6 @@ class Quote {
         return $stmt->execute();
     }
 
-
     // Update a quote
     public function update() {
         // Create query

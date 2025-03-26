@@ -1,32 +1,43 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
-header('Access-Control-Allow-Methods: DELETE');
-header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
+    header('Access-Control-Allow-Origin: *');
+    header('Content-Type: application/json');
+    header('Access-Control-Allow-Methods: DELETE');
+    header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
 
-include_once '../../config/Database.php';
-include_once '../../models/Quote.php';
+    include_once '../../config/Database.php';
+    include_once '../../models/Quote.php';
 
-$database = new Database();
-$db = $database->connect();
+    // Create DB & connect
+    $database = new Database();
+    $db = $database->connect();
 
-$quote = new Quote($db);
-$data = json_decode(file_get_contents("php://input"));
+    // Create quote
+    $quote = new Quote($db);
 
-if (!empty($data->id)) {
-    $quote->id = intval($data->id);
+    // Get raw posted data
+    $data = json_decode(file_get_contents("php://input"));
 
-    // Check if the quote exists before deleting
-    if (!$quote->exists()) {
-        echo json_encode(['message' => 'No Quotes Found']);
-    } elseif ($quote->delete()) {
-        echo json_encode([
-            'id' => $quote->id
-        ]);
-    } else {
-        echo json_encode(['message' => 'Quote Not Deleted']);
+    // Ensure we have the required parameters
+    if (!empty($data->id)) {
+
+        // Set the ID to update
+        $quote->id = intval($data->id);
+
+        // Check if quote exists
+        if (!$quote->exists()) {
+            echo json_encode(['message' => 'No Quotes Found']);
+        // Delete quote
+        } elseif ($quote->delete()) {
+            echo json_encode([
+                'id' => $quote->id
+            ]);
+        // There was some other issue
+        } else {
+            echo json_encode(['message' => 'Quote Not Deleted']);
+        }
+    } 
+    // Send missing parameters message 
+    else {
+        echo json_encode(['message' => 'Invalid ID']);
     }
-} else {
-    echo json_encode(['message' => 'Invalid ID']);
-}
 ?>
