@@ -23,7 +23,7 @@
         // Set the ID to update
         $author->id = intval($data->id);
 
-        // Check if the author exists before deleting
+        // Check if author exists
         if (!$author->exists()) {
             echo json_encode(['message' => 'Author ID Not Found']);
         // Delete author
