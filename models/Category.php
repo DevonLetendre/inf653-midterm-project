@@ -75,7 +75,7 @@ class Category {
         return $stmt->rowCount() > 0; // Returns true if the category exists, otherwise false
     }
 
-
+/*
     public function exists2() {
         $query = "SELECT id FROM categories WHERE id = :id LIMIT 1";
         $stmt = $this->conn->prepare($query);
@@ -84,7 +84,7 @@ class Category {
         
         return $stmt->rowCount() > 0;
     }
-    
+    */
 
     public function exists3($category_id) {
         $query = 'SELECT id FROM categories WHERE id = :id LIMIT 1';

@@ -48,7 +48,14 @@ include_once '../../models/Category.php';
 $category = new Category($db);
 $category->id = $quote->category_id;
 
+/*
 if (!$category->exists2()) {
+    echo json_encode(['message' => 'category_id Not Found']);
+    exit();
+}
+*/
+
+if (!$category->exists()) {
     echo json_encode(['message' => 'category_id Not Found']);
     exit();
 }
