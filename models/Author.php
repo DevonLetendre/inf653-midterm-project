@@ -15,7 +15,6 @@
 
         // Read all authors
         public function read() {
-
             // Create query
             $query = 'SELECT
                         id,
