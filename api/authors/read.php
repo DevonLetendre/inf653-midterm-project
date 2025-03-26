@@ -37,7 +37,7 @@
             } 
             // Send authors not found message
             else {
-                echo json_encode(array('message' => 'author_id Not Found'));
+                echo json_encode(['message' => 'author_id Not Found']);
             }
     }
 ?>
