@@ -1,44 +1,54 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
+    header('Access-Control-Allow-Origin: *');
+    header('Content-Type: application/json');
 
-include_once '../../config/Database.php';
-include_once '../../models/Quote.php';
+    include_once '../../config/Database.php';
+    include_once '../../models/Quote.php';
 
-// Instantiate DB & connect
-$database = new Database();
-$db = $database->connect();
+    // Creatte DB & connect
+    $database = new Database();
+    $db = $database->connect();
 
-// Instantiate quote object
-$quote = new Quote($db);
+    // Create quote object
+    $quote = new Quote($db);
 
-// Check if author_id is provided
-if (isset($_GET['author_id'])) {
-    $quote->author_id = $_GET['author_id'];
+    // Ensure author_id is given
+    if (isset($_GET['author_id'])) {
 
-    // Get quotes by author_id
-    $result = $quote->read_by_author();
-    $num = $result->rowCount();
+        // Set author id to read
+        $quote->author_id = $_GET['author_id'];
 
-    if ($num > 0) {
-        $quotes_arr = array();
+        // Get quotes by author_id
+        $result = $quote->read_by_author();
 
-        while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
-            extract($row);
-            $quote_item = array(
-                'id' => $id,
-                'quote' => $quote,
-                'author' => $author_name,
-                'category' => $category_name
-            );
-            array_push($quotes_arr, $quote_item);
+        // Get row count
+        $num = $result->rowCount();
+
+        // We return all quotes by author with given id
+        if ($num > 0) {
+            $quotes_arr = array();
+
+            // Get all quotes
+            while ($row = $result->fetch(PDO::FETCH_ASSOC)) {
+                extract($row);
+                $quote_item = array(
+                    'id' => $id,
+                    'quote' => $quote,
+                    'author' => $author_name,
+                    'category' => $category_name
+                );
+                array_push($quotes_arr, $quote_item);
+            }
+            // Return the quotes
+            echo json_encode($quotes_arr);
+        } 
+        // No quotes found, return message
+        else {
+            echo json_encode(array('message' => 'No Quotes Found'));
         }
-
-        echo json_encode($quotes_arr);
-    } else {
-        echo json_encode(array('message' => 'No Quotes Found'));
+    } 
+    // Send missing paramters message
+    else {
+        echo json_encode(array('message' => 'Missing required parameter: author_id.'));
     }
-} else {
-    echo json_encode(array('message' => 'Missing required parameter: author_id.'));
-}
 ?>
