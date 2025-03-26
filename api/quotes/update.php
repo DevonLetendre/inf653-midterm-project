@@ -13,7 +13,7 @@
     $database = new Database();
     $db = $database->connect();
 
-    // Instantiate quote object
+    // Create quote, author, and category objects
     $quote = new Quote($db);
     $author = new Author($db);
     $category = new Category($db);
@@ -30,7 +30,7 @@
 
     // Assign data to the quote object
     $quote->id = intval($data->id);
-    $quote->quote = htmlspecialchars(strip_tags($data->quote));
+    $quote->quote = $data->quote;
     $quote->author_id = intval($data->author_id);
     $quote->category_id = intval($data->category_id);
 
