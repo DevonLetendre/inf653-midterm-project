@@ -12,8 +12,6 @@ require_once '../../config/Database.php';
 require_once '../../models/Author.php';
 require_once '../../models/Category.php';
 require_once '../../models/Quote.php';
-require_once '../../function/isValid.php';
-
 
 // Database connection
 $database = new Database();
