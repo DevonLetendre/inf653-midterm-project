@@ -24,6 +24,7 @@
     // Ensure required data is present
     if (!isset($data->id, $data->quote, $data->author_id, $data->category_id) || 
         empty($data->id) || empty($data->quote) || empty($data->author_id) || empty($data->category_id)) {
+       // Error message if missing any parameters
         echo json_encode(["message" => "Missing Required Parameters"]);
         exit();
     }
