@@ -1,33 +1,36 @@
 <?php
-header('Access-Control-Allow-Origin: *');
-header('Content-Type: application/json');
+    header('Access-Control-Allow-Origin: *');
+    header('Content-Type: application/json');
 
-include_once '../../config/Database.php';
-include_once '../../models/Quote.php';
+    include_once '../../config/Database.php';
+    include_once '../../models/Quote.php';
 
-// Instantiate DB & connect
-$database = new Database();
-$db = $database->connect();
+    // Create DB & connect
+    $database = new Database();
+    $db = $database->connect();
 
-// Instantiate quote object
-$quote = new Quote($db);
+    // Create quote object
+    $quote = new Quote($db);
 
-// Get ID from URL
-$quote->id = isset($_GET['id']) ? intval($_GET['id']) : die(json_encode(array('message' => 'Quote ID not provided.')));
+    // Get ID
+    $quote->id = isset($_GET['id']) ? intval($_GET['id']) : die();
 
-// Fetch quote
-$quote->read_single();
+    // Get quote
+    $quote->read_single();
 
-if ($quote->quote) {
-    $quote_arr = array(
-        'id' => $quote->id,
-        'quote' => $quote->quote,
-        'author' => $quote->author,
-        'category' => $quote->category
-    );
+    // Set properties if found & return
+    if ($quote->quote) {
+        $quote_arr = array(
+            'id' => $quote->id,
+            'quote' => $quote->quote,
+            'author' => $quote->author,
+            'category' => $quote->category
+        );
 
-    echo json_encode($quote_arr);
-} else {
-    echo json_encode(array('message' => 'No Quotes Found'));
-}
+        echo json_encode($quote_arr);
+    } 
+    // Send quotes not found message
+    else {
+        echo json_encode(array('message' => 'No Quotes Found'));
+    }
 ?>
