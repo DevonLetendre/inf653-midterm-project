@@ -3,6 +3,7 @@
         // DB stuff
         private $conn;
         private $table = 'authors';
+
         // Properties
         public $id;
         public $author;
