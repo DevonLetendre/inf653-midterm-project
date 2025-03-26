@@ -98,21 +98,6 @@ class Quote {
     }
 
     // Helper method
-    public function create2() {
-        $query = 'INSERT INTO quotes (quote, author_id, category_id) VALUES (:quote, :author_id, :category_id)';
-        $stmt = $this->conn->prepare($query);
-    
-        $stmt->bindParam(':quote', $this->quote);
-        $stmt->bindParam(':author_id', $this->author_id);
-        $stmt->bindParam(':category_id', $this->category_id);
-    
-        if ($stmt->execute()) {
-            return $this->conn->lastInsertId(); // Return inserted quote ID
-        }
-        return false;
-    }
-
-    // Helper method
     public function create3() {
         $query = "INSERT INTO quotes (quote, author_id, category_id) 
                   VALUES (:quote, :author_id, :category_id)";
