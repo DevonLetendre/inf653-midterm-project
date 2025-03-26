@@ -9,7 +9,7 @@ if ($requestUri === '/' || $requestUri === '/api/' || $requestUri === '/api') {
     <head>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Welcome</title>
+        <title>Quotes REST API</title>
         <style>
             body {
                 background-color: grey;
@@ -24,7 +24,9 @@ if ($requestUri === '/' || $requestUri === '/api/' || $requestUri === '/api') {
         </style>
     </head>
     <body>
-        <h1>Your Name</h1>
+        <h1>My Quotes Palace</h1>
+        <p>Author: Devon Letendre</p>
+        <i>"What comes around is all around"</i>
     </body>
     </html>';
     exit;
