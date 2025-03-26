@@ -1,7 +1,9 @@
 <?php
-// Serve custom webpage when accessing the root or /api/
-if ($_SERVER['REQUEST_URI'] === '/' || $_SERVER['REQUEST_URI'] === '/api/') {
-    // Output the HTML directly
+// Check the request URI
+$requestUri = $_SERVER['REQUEST_URI'];
+
+// If the request is for / or /api/, serve the custom webpage
+if ($requestUri === '/' || $requestUri === '/api/' || $requestUri === '/api') {
     echo '<!DOCTYPE html>
     <html lang="en">
     <head>
@@ -27,6 +29,9 @@ if ($_SERVER['REQUEST_URI'] === '/' || $_SERVER['REQUEST_URI'] === '/api/') {
     </html>';
     exit;
 }
+
+// If it's not the root or /api/, continue with normal processing (likely the API logic)
+
 
 // Debugging Information (Optional - remove in production)
 echo '<pre>';
