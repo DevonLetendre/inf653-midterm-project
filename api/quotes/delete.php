@@ -1,39 +1,32 @@
 <?php
-    //Headers
-    header('Access-Control-Allow-Origin: *');
-    header('Content-Type: application/json');
-    header('Access-Control-Allow-Methods: DELETE');
-    header('Access-Control-Allow-Headers: Access-Control-Allow-Headers, Content-Type, 
-    Access-Control-Allow-Methods, Authorization, X-Requested-With');
+header('Access-Control-Allow-Origin: *');
+header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: DELETE');
+header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
 
-    include_once '../../config/Database.php';
-    include_once '../../models/Quote.php';
+include_once '../../config/Database.php';
+include_once '../../models/Quote.php';
 
-    //Instantiate DB & connect
-    $database = new Database();
-    $db = $database->connect();
+$database = new Database();
+$db = $database->connect();
 
-    //Instantiate Category object
-    $quote = new Quote($db);
+$quote = new Quote($db);
+$data = json_decode(file_get_contents("php://input"));
 
-    //Get raw posted data
-    $data = json_decode(file_get_contents("php://input"));
+if (!empty($data->id)) {
+    $quote->id = intval($data->id);
 
-    // Check if ID is provided
-    if (!isset($data->id) || empty($data->id)) {
-        echo json_encode(array('message' => 'No Quotes Found'));
-        exit;
-    }
-
-    //Set ID to update
-    $quote->id = $data->id;
-
-    //Delete quote
-    $deleted_id = $quote->delete();
-
-    if($deleted_id){
-        echo json_encode(array('id' => $deleted_id));
+    // Check if the quote exists before deleting
+    if (!$quote->exists()) {
+        echo json_encode(['message' => 'No Quotes Found']);
+    } elseif ($quote->delete()) {
+        echo json_encode([
+            'id' => $quote->id
+        ]);
     } else {
-        echo json_encode(array('message' => 'No Quotes Found'));
+        echo json_encode(['message' => 'Quote Not Deleted']);
     }
+} else {
+    echo json_encode(['message' => 'Invalid ID']);
+}
 ?>

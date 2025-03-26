@@ -1,36 +1,61 @@
 <?php
-//Headers
 header('Access-Control-Allow-Origin: *');
 header('Content-Type: application/json');
+header('Access-Control-Allow-Methods: POST');
+header('Access-Control-Allow-Headers: Content-Type, Access-Control-Allow-Headers, Authorization, X-Requested-With');
 
-//Include the database and Quote class
 include_once '../../config/Database.php';
 include_once '../../models/Quote.php';
 
-//Instantiate DB & connect
 $database = new Database();
 $db = $database->connect();
 
-//Instantiate the Quote object
 $quote = new Quote($db);
 
-//Get the input data
+// Get raw posted data
 $data = json_decode(file_get_contents("php://input"));
 
-//Check if the required parameters are provided
-if (isset($data->quote) && isset($data->author_id) && isset($data->category_id)) {
-    //Set the Quote properties
-    $quote->quote = $data->quote;
-    $quote->author_id = $data->author_id;
-    $quote->category_id = $data->category_id;
+// Validate input
+if (empty($data->quote) || empty($data->author_id) || empty($data->category_id)) {
+    echo json_encode(['message' => 'Missing Required Parameters']);
+    exit();
+}
 
-    //Attempt to create the quote and get the response
-    $response = $quote->create();
+// Assign values
+$quote->quote = htmlspecialchars(strip_tags($data->quote));
+$quote->author_id = intval($data->author_id);
+$quote->category_id = intval($data->category_id);
 
-    //Return the response (either success or error message)
-    echo json_encode($response);
+// Check if author_id exists
+include_once '../../models/Author.php';
+$author = new Author($db);
+$author->id = $quote->author_id;
+
+if (!$author->exists2()) {
+    echo json_encode(['message' => 'author_id Not Found']);
+    exit();
+}
+
+// Check if category_id exists
+include_once '../../models/Category.php';
+$category = new Category($db);
+$category->id = $quote->category_id;
+
+if (!$category->exists2()) {
+    echo json_encode(['message' => 'category_id Not Found']);
+    exit();
+}
+
+// Create quote
+$newQuoteId = $quote->create3();
+if ($newQuoteId) {
+    echo json_encode([
+        'id' => $newQuoteId,
+        'quote' => $quote->quote,
+        'author_id' => $quote->author_id,
+        'category_id' => $quote->category_id
+    ]);
 } else {
-    //If any required parameters are missing, return an error message
-    echo json_encode(array('message' => 'Missing Required Parameters'));
+    echo json_encode(['message' => 'Quote Not Created']);
 }
 ?>
