@@ -34,25 +34,25 @@
     $quote->author_id = intval($data->author_id);
     $quote->category_id = intval($data->category_id);
 
-    // Check if quote exists
+    // Ensure quote exists
     if (!$quote->exists()) {
         echo json_encode(["message" => "No Quotes Found"]);
         exit();
     }
 
-    // Check if author_id exists
+    // Ensure author_id exists
     if (!$author->exists($quote->author_id)) {
         echo json_encode(["message" => "author_id Not Found"]);
         exit();
     }
 
-    // Check if category_id exists
+    // Ensure category_id exists
     if (!$category->exists($quote->category_id)) {
         echo json_encode(["message" => "category_id Not Found"]);
         exit();
     }
 
-    // Attempt to update the quote
+    // Update the quote
     if ($quote->update()) {
         echo json_encode([
             "id" => $quote->id,
@@ -60,7 +60,9 @@
             "author_id" => $quote->author_id,
             "category_id" => $quote->category_id
         ]);
-    } else {
+    }
+    // If unable to update, send message 
+    else {
         echo json_encode(["message" => "Failed to update quote."]);
     }
 ?>
