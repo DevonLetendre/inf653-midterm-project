@@ -12,8 +12,7 @@
     // Create author object
     $author = new Author($db);
 
-    // Get ID from URL
-    //$author->id = isset($_GET['id']) ? intval($_GET['id']) : die(json_encode(array('message' => 'Author ID not provided.')));
+    // Get ID
     $author->id = isset($_GET['id']) ? intval($_GET['id']) : die();
 
     // Get author
