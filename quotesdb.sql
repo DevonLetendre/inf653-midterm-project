@@ -75,6 +75,7 @@ INSERT INTO quotes (quote, author_id, category_id) VALUES
 ('If you find it in your heart to care for somebody else, you will have succeeded.', 3, 4),
 ('My most brilliant achievement was my ability to be able to persuade my wife to marry me.', 4, 4),
 ('Women are meant to be loved, not to be understood.', 5, 4),
+('Skibbidy bop doodle munchin on some strudel.', 5, 4)
 
 -- Happiness Quotes
 ('A calm and modest life brings more happiness than the pursuit of success combined with constant restlessness.', 1, 5),
