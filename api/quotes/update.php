@@ -41,13 +41,13 @@
     }
 
     // Check if author_id exists
-    if (!$author->exists3($quote->author_id)) {
+    if (!$author->exists($quote->author_id)) {
         echo json_encode(["message" => "author_id Not Found"]);
         exit();
     }
 
     // Check if category_id exists
-    if (!$category->exists3($quote->category_id)) {
+    if (!$category->exists($quote->category_id)) {
         echo json_encode(["message" => "category_id Not Found"]);
         exit();
     }

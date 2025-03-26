@@ -128,6 +128,18 @@
             return $stmt->execute();
         }
 
+        // Helper function 
+        public function exists($author_id = null) {
+            $id = $author_id ?? $this->id; // Use parameter if provided, otherwise default to instance property
+            $query = 'SELECT id FROM authors WHERE id = :id LIMIT 1';
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(':id', $id);
+            $stmt->execute();
+            
+            return $stmt->rowCount() > 0;
+        }
+       
+       /*
         // Helper method
         public function exists() {
             $query = 'SELECT id FROM authors WHERE id = :id LIMIT 1';
@@ -138,7 +150,6 @@
             return $stmt->rowCount() > 0; // Returns true if the author exists, otherwise false
         }
 
-        /*
         public function exists2() {
             $query = "SELECT id FROM authors WHERE id = :id LIMIT 1";
             $stmt = $this->conn->prepare($query);
@@ -147,8 +158,7 @@
             
             return $stmt->rowCount() > 0;
         }
-        */
-
+        
         // Helper method
         public function exists3($author_id) {
             $query = 'SELECT id FROM authors WHERE id = :id LIMIT 1';
@@ -158,7 +168,7 @@
             
             return $stmt->rowCount() > 0;
         }
-        
+        */
         
     }
 ?>
