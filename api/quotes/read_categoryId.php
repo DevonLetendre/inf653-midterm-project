@@ -12,12 +12,12 @@ $db = $database->connect();
 // Instantiate quote object
 $quote = new Quote($db);
 
-// Check if category_id is provided
-if (isset($_GET['category_id'])) {
-    $quote->category_id = $_GET['category_id'];
+// Check if author_id is provided
+if (isset($_GET['author_id'])) {
+    $quote->author_id = $_GET['author_id'];
 
-    // Get quotes by category_id
-    $result = $quote->read_by_category();
+    // Get quotes by author_id
+    $result = $quote->read_by_author();
     $num = $result->rowCount();
 
     if ($num > 0) {
@@ -39,6 +39,6 @@ if (isset($_GET['category_id'])) {
         echo json_encode(array('message' => 'No Quotes Found'));
     }
 } else {
-    echo json_encode(array('message' => 'Missing required parameter: category_id.'));
+    echo json_encode(array('message' => 'Missing required parameter: author_id.'));
 }
 ?>
