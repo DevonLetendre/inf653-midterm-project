@@ -14,19 +14,24 @@ if ($requestUri === '/' || $requestUri === '/api/' || $requestUri === '/api') {
             body {
                 background-color: grey;
                 display: flex;
+                flex-direction: column;
                 justify-content: center;
                 align-items: center;
                 height: 100vh;
                 color: white;
                 font-size: 24px;
                 font-family: Arial, sans-serif;
+                text-align: center;
+            }
+            .quote {
+                font-size: 14px;
             }
         </style>
     </head>
     <body>
-        <h1>My Quotes Palace</h1><br>
-        <p>Author: Devon Letendre</p><br>
-        <p style="font-size: 14px;"><i>"What comes around is all around"</i></p>    
+        <h1>My Quotes Palace</h1>
+        <p>Author: Devon Letendre</p>
+        <p class="quote"><i>"What comes around is all around"</i></p>    
     </body>
     </html>';
     exit;
