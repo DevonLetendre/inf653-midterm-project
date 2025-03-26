@@ -24,8 +24,8 @@ if ($requestUri === '/' || $requestUri === '/api/' || $requestUri === '/api') {
         </style>
     </head>
     <body>
-        <h1>My Quotes Palace</h1>
-        <p>Author: Devon Letendre</p>
+        <h1>My Quotes Palace</h1><br>
+        <p>Author: Devon Letendre</p><br>
         <i>"What comes around is all around"</i>
     </body>
     </html>';
