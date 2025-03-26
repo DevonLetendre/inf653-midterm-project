@@ -19,6 +19,7 @@
     // Get author
     $author->read_single();
 
+    // Set properties if found & return
     if ($author->author) {
         $author_arr = array(
             'id' => $author->id,
@@ -26,7 +27,9 @@
         );
 
         echo json_encode($author_arr);
-    } else {
+    } 
+    // Send authors not found message
+    else {
         echo json_encode(array('message' => 'author_id Not Found'));
     }
 ?>
