@@ -98,7 +98,6 @@ class Quote {
     }
 
     // Helper method
-    /*
     public function create2() {
         $query = 'INSERT INTO quotes (quote, author_id, category_id) VALUES (:quote, :author_id, :category_id)';
         $stmt = $this->conn->prepare($query);
@@ -112,9 +111,8 @@ class Quote {
         }
         return false;
     }
-        */
 
-    // Helper method 
+    // Helper method
     public function create3() {
         $query = "INSERT INTO quotes (quote, author_id, category_id) 
                   VALUES (:quote, :author_id, :category_id)";
