@@ -4,7 +4,7 @@
 
 ### Author: Devon Letendre
 
-### REST API Directrory URL: https://inf653-midterm-project-osa4.onrender.com/api/
+### REST API Directory URL: https://inf653-midterm-project-osa4.onrender.com/api/
 ### Public Webpage URL: https://inf653-midterm-project-osa4.onrender.com
 
 ## Description
