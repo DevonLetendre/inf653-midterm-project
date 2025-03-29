@@ -5,13 +5,6 @@
     include_once '../../config/Database.php';
     include_once '../../models/Author.php';
 
-    // Create DB & connect
-    $database = new Database();
-    $db = $database->connect();
-
-    // Create author object
-    $author = new Author($db);
-
     // Get authors
     $result = $author->read();
 
