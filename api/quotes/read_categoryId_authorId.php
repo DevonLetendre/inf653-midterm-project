@@ -41,4 +41,4 @@
     else {
         echo json_encode(array('message' => 'Missing required parameters: category_id and author_id.'));
     }
-// Production Commit
+?>

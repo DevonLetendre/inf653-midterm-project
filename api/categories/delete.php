@@ -27,4 +27,4 @@
     else {
         echo json_encode(['message' => 'Category ID is required.']);
     }
-// Production Commit
+?>

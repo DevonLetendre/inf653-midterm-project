@@ -40,5 +40,5 @@
         else {
             echo json_encode(['message' => 'No Quotes Found']);
         }
-}
-// Production Commit
+    }
+?>
