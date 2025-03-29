@@ -18,9 +18,13 @@
     $database = new Database();
     $db = $database->connect();
 
-    // Route to the correct operation based on HTTP method
+    // Create the necessary objects
+    // Note: Author & Category objects here are used only be update.php
     $quote = new Quote($db);
+    $author = new Author($db);
+    $category = new Category($db);
 
+    // Route to the correct operation based on HTTP method
     if($method == "GET"){
         require_once 'read.php';
     }

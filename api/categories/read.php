@@ -1,16 +1,7 @@
 <?php
-    header('Access-Control-Allow-Origin: *');
-    header('Content-Type: application/json');
-
+    // Include the Database class & Catrgory data model
     include_once '../../config/Database.php';
     include_once '../../models/Category.php';
-
-    // Create DB & connect
-    $database = new Database();
-    $db = $database->connect();
-
-    // Create category object
-    $category = new Category($db);
 
     // Get categories
     $result = $category->read();
